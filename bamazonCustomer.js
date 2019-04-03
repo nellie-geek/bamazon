@@ -17,6 +17,8 @@ function displayItems(){
         if (err) throw err;
         
     });
+    
+    promptUser();
 }
 
 function promptUser() {
@@ -51,10 +53,10 @@ function promptUser() {
                 ], function(err, res) {
                     if (err) throw err; 
 
-                    var total = response.quantity * 
-                }
-                
-                )
+                    var total = response.quantity * perPrice;
+                    console.log("\nYour total cost is $" + total + ".");
+                    displayItems();
+                })
             } else {
                 console.log("\nInsufficient quantity on hand.");
                 displayItems();
