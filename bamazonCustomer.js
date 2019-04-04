@@ -4,9 +4,9 @@ var mysql = require("mysql");
 
 var connection = mysql.createConnection({
     host: "localhost",
-    port: 8889,
+    port: 3306,
     user: "root",
-    password: "",
+    password: "root",
     database: "bamazon_db"
     
 });
@@ -26,7 +26,7 @@ function promptUser() {
         {
             type: "input",
             name: "item_id",
-            message: "Please enter the item_id for the item(s) you'd like to purhcase."
+            message: "Please enter the item_id for the item(s) you'd like to purchase."
         },
         {
             type: "input",
