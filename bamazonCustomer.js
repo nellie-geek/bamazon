@@ -1,7 +1,7 @@
 // Dependencies 
 var inquirer = require("inquirer");
 var mysql = require("mysql");
-
+// require("console.table");
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -12,13 +12,21 @@ var connection = mysql.createConnection({
 });
 
 function displayItems(){
-    console.log("\nItems available for purchase:\n");
+    
     connection.query("SELECT * FROM products", function(err, res) {
         if (err) throw err;
-        
+
+        console.log("\nItems available for purchase:\n");
+        // console.table(res);
+
+        for (var i = 0; i < res.length; i++) {
+            console.log("Item Id: " + res[i].item_id + " || " + res[i].product_name + " || " + "Price: " + "$" + res[i].price);
+        }
+
+        promptUser();
     });
+
     
-    promptUser();
 }
 
 function promptUser() {
@@ -34,6 +42,8 @@ function promptUser() {
             message: "Enter the quantity you would like to purchase."
         }
     ]).then(function(response) {
+        console.log(response);
+        
         connection.query("SELECT * FROM products WHERE item_id=" + response.id, function(err, res) {
             if (err) throw err;
             
@@ -48,7 +58,7 @@ function promptUser() {
                         stock_quantity: newQuantity
                     },
                     {
-                        item_id: response.id
+                        item_id: res[0].item_id
                     }
                 ], function(err, res) {
                     if (err) throw err; 
